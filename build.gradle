@@ -1,0 +1,55 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.0.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+    id 'net.ltgt.apt-idea' version '0.20'
+}
+
+group = 'by.vchernukha'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+ext {
+    springboot = '2.3.0.RELEASE'
+    lombok = '1.18.12'
+    mapstruct = '1.3.1.Final'
+    javax = '2.0.1.Final'
+    hibernate = '5.4.16.Final'
+    h2database = '1.4.200'
+    apacheLang = '3.10'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web:${springboot}"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springboot}"
+    implementation "org.springframework.boot:spring-boot-starter-validation:${springboot}"
+    implementation "org.mapstruct:mapstruct:${mapstruct}"
+    implementation "org.hibernate:hibernate-entitymanager:${hibernate}"
+    implementation "javax.validation:validation-api:${javax}"
+
+    implementation "org.apache.commons:commons-lang3:${apacheLang}"
+    compileOnly "org.projectlombok:lombok:${lombok}"
+    runtimeOnly "com.h2database:h2:${h2database}"
+
+    annotationProcessor "org.projectlombok:lombok:${lombok}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstruct}"
+    testAnnotationProcessor "org.mapstruct:mapstruct-processor:${mapstruct}"
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test:${springboot}") {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
